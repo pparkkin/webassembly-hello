@@ -23,6 +23,12 @@ WORKDIR /webassembly-test/hello-world-cpp
 RUN /bin/bash -c "source /emsdk/emsdk_env.sh --build=Release \
   && emcc hello.cpp -s WASM=1 -o hello.js"
 
+# Build example
+COPY file-io-c /webassembly-test/file-io-c/
+WORKDIR /webassembly-test/file-io-c
+RUN /bin/bash -c "source /emsdk/emsdk_env.sh --build=Release \
+  && emcc fileio.c -s WASM=1 -o fileio.js"
+
 # Entry point will open HTTP server to serve all examples
 WORKDIR /webassembly-test
 ENTRYPOINT /bin/bash -c "source /emsdk/emsdk_env.sh --build=Release \
